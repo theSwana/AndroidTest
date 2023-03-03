@@ -1,13 +1,11 @@
 package com.example.androidtest
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,22 +14,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textViewCounter: TextView
     private lateinit var buttonUp: Button
     private lateinit var buttonDown: Button
+    private lateinit var nameEditText: EditText
+    private lateinit var name: String
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         linearLayout = findViewById(R.id.linearLayout)
         textViewCounter = findViewById(R.id.textViewCounter)
         buttonUp = findViewById(R.id.buttonUp)
         buttonDown = findViewById(R.id.buttonDown)
+        nameEditText = findViewById(R.id.textView)
+
 
         buttonUp.setOnClickListener {
-            if (counter < 10) {
-                counter++
-                textViewCounter.text = counter.toString()
+            counter++
+            if (counter == 10) {
+                val intent = Intent(this, SuccessActivity::class.java)
+                intent.putExtra("name", name)
+                startActivity(intent)
+                counter = 0
             }
+            textViewCounter.text = "$counter"
         }
 
         buttonDown.setOnClickListener {
